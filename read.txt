@@ -1,0 +1,4 @@
+The DigitalGameStore.sql database script is provided to generate it, but is not required to use the application
+since it will be generated automatically using Spring Docker Compose and Spring JPA.
+
+The InsertIntoGame.sql script to insert rows into the game table and test the application is also provided.

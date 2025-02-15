@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${game.title + ' - Digital Game Store'}">Game Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Updated fragment syntax -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container mt-4">
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 th:text="${game.title}">Game Title</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <dl class="row">
+                            <dt class="col-sm-3">Genre:</dt>
+                            <dd class="col-sm-9" th:text="${game.genre}">Genre</dd>
+
+                            <dt class="col-sm-3">Developer:</dt>
+                            <dd class="col-sm-9" th:text="${game.developer}">Developer</dd>
+
+                            <dt class="col-sm-3">Release Date:</dt>
+                            <dd class="col-sm-9" th:text="${game.releaseDate}">Release Date</dd>
+
+                            <dt class="col-sm-3">Description:</dt>
+                            <dd class="col-sm-9" th:text="${game.description}">Description</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Purchase Options</h5>
+                                <p class="card-text">
+                                    <strong>Buy:</strong> 
+                                    $<span th:text="${#numbers.formatDecimal(game.price, 1, 2)}">59.99</span>
+                                </p>
+                                <p class="card-text">
+                                    <strong>Lease (30 days):</strong> 
+                                    $<span th:text="${#numbers.formatDecimal(game.leasePrice, 1, 2)}">9.99</span>
+                                </p>
+                                <form th:action="@{/transactions/purchase/{id}(id=${game.gameId})}" 
+                                      method="post" class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">Purchase</button>
+                                </form>
+                                <form th:action="@{/transactions/lease/{id}(id=${game.gameId})}" 
+                                      method="post" class="d-grid gap-2 mt-2">
+                                    <button type="submit" class="btn btn-secondary">Lease</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <a th:href="@{/games}" class="btn btn-outline-secondary">Back to Games</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

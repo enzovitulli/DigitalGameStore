@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Navigation Fragment</title>
+</head>
+<body>
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">Digital Game Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/games}">Games</a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav" th:if="${session.user != null}">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/profile}">
+                            <span th:text="${session.user.username}">Username</span>
+                            ($<span th:text="${#numbers.formatDecimal(session.user.accountBalance,1,2)}">0.00</span>)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/users/logout}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-link nav-link">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

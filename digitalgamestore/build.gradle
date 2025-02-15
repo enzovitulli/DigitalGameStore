@@ -1,0 +1,65 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.2'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'dws'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	/* Spring Web:
+	Provides tools and libraries for building web applications. 
+	Allows the creation of controllers and handles HTTP requests and responses. */
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	
+	/* Spring Data JPA:
+	Reduces boilerplate code for database interactions.
+	You can define Repository interfaces, eliminating the need for explicit DAO classes.
+	Instead of writing SQL queries and DAO classes, Spring Data JPA handles CRUD operations for entities */
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	/* Spring Boot Actuator:
+	Adds production-ready features to monitor and manage the application.
+	Provides endpoints to check health, metrics, and other application information. */
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	/* Docker Compose:
+	Looks for any docker-compose.yml file in the project folder structure and starts it automatically
+	when running the application. The default behavior is to start and stop the container, 
+	but it can be modified to just start it or do none as well. 
+	It also allows many other settings defined in application.properties*/
+	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+	/* Lombok:
+	Java library to reduce boilerplate code.
+	Provides annotations for automatic getter/setter generation. */
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	/* MariaDB Driver:
+	Provides the necessary driver to connect to the mariadb database */
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	
+	// Test dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+compileJava {
+    options.compilerArgs += ['-parameters']
+}
