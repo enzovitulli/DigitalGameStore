@@ -185,7 +185,7 @@ public class UserController {
             }
             // Transactions will be deleted automatically due to CASCADE configuration in entity
             userRepository.deleteById(userId);
-            logger.info("User and related transactions deleted for ID: {}", userId);
+            logger.info("User deleted with ID: {}", userId);
         } catch (Exception e) {
             logger.error("Error deleting user with ID {}: {}", userId, e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, 
